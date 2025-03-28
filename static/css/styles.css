@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #3F4F44;
+    color:white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: #c6ecd9;
+}
+
+
+
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.btn, .lang-btn {
+    background-color: #3F4F44;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 80px 10%;
+}
+
+.content {
+    max-width: 50%;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.video-container {
+    max-width: 50%;
+}
+
+iframe {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .content, .video-container {
+        max-width: 100%;
+    }
+}
+
+/* About Us - Team Section */
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers everything inside */
+    text-align: center; /* Ensures text is aligned */
+}
+
+
+.team h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+    display: block; /* Ensures it behaves like a full-width block */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+
+.team-member {
+    background: #ffffff15;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.team-member:hover {
+    transform: scale(1.05);
+}
+
+.team-member img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.team-member h2 {
+    font-size: 20px;
+    margin: 10px 0 5px;
+}
+
+.role {
+    font-size: 14px;
+    color: #d3b8ff;
+    margin-bottom: 10px;
+}
+
+/* Social Icons */
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: white !important;  /* Makes icons white */
+    margin-right: 10px;
+    transition: opacity 0.3s;
+}
+
+.social-icons a:hover {
+    opacity: 0.7;
+}
+
+.team-title {
+    width: 100%;
+    text-align: center;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+footer {
+    background-color: #c1e6c1; /* Adjusted background color */
+    color: black;
+    padding: 20px 40px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.footer-logo {
+    width: 100px; /* Increased logo size */
+    height: auto;
+    margin-right: 20px; /* Space between logo and text */
+}
+
+.footer-left h3 {
+    margin-bottom: 5px;
+}
+
+.footer-left p {
+    margin: 0;
+    max-width: 250px; /* Prevents text from stretching */
+}
+
+.footer-center, 
+.footer-right {
+    flex: 1;
+    text-align: center;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer-center{
+    align-items: flex-start;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons i {
+    font-size: 20px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+
+
+
+.logo {
+    height: 50px; /* Keep navbar height same */
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Prevent logo from pushing navbar */
+}
+
+.logo img {
+    height: 100px; /* Bigger logo */
+    width: auto; /* Maintain aspect ratio */
+    transform: scale(1.5); /* Zoom in without affecting layout */
+}
+.logo-container {
+    display: flex;
+    align-items: center;  /* Vertically center it */
+    justify-content: flex-start;
+    margin-left: 10px; /* Adjust this value for minimal margin */
+}
+
+

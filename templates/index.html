@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Translator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        #video {
+            width: 60%;
+            border: 3px solid #000;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        #gesture-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sign Language Translator</h1>
+    <video id="video" autoplay></video>
+    <p id="gesture-text">Waiting for gesture...</p>
+
+    <script>
+        var socket = io();
+        var video = document.getElementById("video");
+        var gestureText = document.getElementById("gesture-text");
+        
+        // Debug: Check available voices
+        setTimeout(() => {
+            console.log("Available voices:", window.speechSynthesis.getVoices());
+        }, 1000);
+
+        // Access webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+                let canvas = document.createElement("canvas");
+                let context = canvas.getContext("2d");
+
+                function sendFrame() {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    let dataURL = canvas.toDataURL("image/jpeg");
+
+                    // Send frame to backend
+                    socket.emit("video_frame", { frame: dataURL });
+
+                    setTimeout(sendFrame, 300); // Send every 100ms
+                }
+
+                sendFrame();
+            })
+            .catch(function(error) {
+                console.log("Error accessing webcam:", error);
+            });
+
+            let lastGesture = ""; // Store the last recognized gesture
+
+socket.on("gesture_result", function(data) {
+    let newGesture = data.gesture;
+    gestureText.innerText = "Recognized Gesture: " + newGesture;
+
+    if (newGesture !== lastGesture && "speechSynthesis" in window) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+
+        // Create speech instance
+        let speech = new SpeechSynthesisUtterance(newGesture);
+
+        // Ensure voices are loaded before using them
+        function speakWithVoice() {
+            let voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                speech.voice = voices.find(voice => voice.lang === "en-US") || voices[0];
+                window.speechSynthesis.speak(speech);
+                lastGesture = newGesture; // Update last recognized gesture
+            } else {
+                console.error("⚠️ No voices available!");
+            }
+        }
+
+        // Wait for voices to load if needed
+        if (window.speechSynthesis.getVoices().length === 0) {
+            window.speechSynthesis.onvoiceschanged = speakWithVoice;
+        } else {
+            speakWithVoice();
+        }
+    }
+});
+
+
+    </script>
+
+</body>
+</html>
